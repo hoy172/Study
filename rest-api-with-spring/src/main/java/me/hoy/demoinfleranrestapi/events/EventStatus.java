@@ -1,5 +1,5 @@
 package me.hoy.demoinfleranrestapi.events;
 
-public enum EvnetStatus {
+public enum EventStatus {
     DRAFT, PUBLISHED, BEGIN_ENROLLMENT;
 }
