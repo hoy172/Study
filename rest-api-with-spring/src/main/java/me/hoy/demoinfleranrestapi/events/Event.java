@@ -28,5 +28,21 @@ public class Event {
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus = EventStatus.DRAFT;
 
+    public void update() {
+        //update free
+        if(this.basePrice == 0 && this.maxPrice ==0){
+            this.free = true;
+        }else{
+            this.free = false;
+        }
+        //update
+        if(this.location == null ||this.location.isBlank()){
+            this.offline = false;
+        }else{
+            this.offline = true;
+        }
+
+
+    }
 }
 //JAVA BEAN SPEC 보기
