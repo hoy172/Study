@@ -1,4 +1,4 @@
-package me.hoy.demoinfleranrestapi.events;
+package me.hoy.demoinfleranrestapi.common;
 
 import org.springframework.boot.test.autoconfigure.restdocs.RestDocsMockMvcConfigurationCustomizer;
 import org.springframework.boot.test.context.TestConfiguration;

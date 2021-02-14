@@ -1,5 +1,6 @@
 package me.hoy.demoinfleranrestapi.events;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,9 @@ public class EventRepresentationModelAssembler extends RepresentationModelAssemb
         resource.add(linkTo(methodOn(EventController.class).createEvent(EventDto.builder().build(), null)).slash(entity.getId()).withSelfRel())
                 .add(linkTo(methodOn(EventController.class).createEvent(null, null)).withRel("query-events"))
                 .add(linkTo(methodOn(EventController.class).createEvent(null, null)).slash(entity.getId()).withRel("update-event"))
-                ;
+//                .add(Link.of("/docs/index.html#resources-events-create").withRel("profile"))
+                .add(new Link("/docs/index.html#resources-events-create").withRel("profile"))
+        ;
         resource.setEvent(entity);
         return resource;
     }
