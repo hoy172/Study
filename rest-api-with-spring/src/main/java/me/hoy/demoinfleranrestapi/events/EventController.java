@@ -1,9 +1,12 @@
 package me.hoy.demoinfleranrestapi.events;
 
+import me.hoy.demoinfleranrestapi.common.ErrorsModel;
+import me.hoy.demoinfleranrestapi.index.IndexController;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -16,15 +19,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.net.URI;
+import java.util.Comparator;
 import javax.validation.Valid;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Controller
 @RequestMapping(value = "/api/events", produces = MediaTypes.HAL_JSON_VALUE)
 public class EventController {
-
-
 
     private final EventRepresentationModelAssembler assembler;
     private final EventRepository eventRepository;
@@ -46,21 +49,23 @@ public class EventController {
         }
         eventValidator.validate(eventDto, errors);
         if (errors.hasErrors()){
-            return ResponseEntity.badRequest().body(errors);
+            return ResponseEntity.badRequest().body(ErrorsModel.of(errors));
+//            return ResponseEntity.badRequest().body(errors);
         }
+
+
+
         Event event = modelMapper.map(eventDto, Event.class);
         event.update();
         Event newEvent = this.eventRepository.save(event);
         WebMvcLinkBuilder selfLinkBuilder = linkTo(EventController.class).slash(newEvent.getId());
         URI createdUri = selfLinkBuilder.toUri();
 
-//
 //        EntityModel eventModel = EntityModel.of(event);
 //        eventModel.add(linkTo(EventController.class).withRel("query-events"));
 //        eventModel.add(selfLinkBuilder.withSelfRel());
 //        eventModel.add(selfLinkBuilder.withRel("update-event"));
 //        return ResponseEntity.created(createdUri).body(eventModel);
-
 //        EventResource eventResource = new EventResource(event);
 //        eventResource.add(linkTo(EventController.class).withRel("query-events"));
 //        eventResource.add(selfLinkBuilder.withSelfRel());
