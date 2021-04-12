@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 // slice test
@@ -30,6 +31,7 @@ public class IndexControllerTest {
     @Test
     public void index() throws Exception {
         this.mockMvc.perform(get("/api"))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("_links.events").exists())
         ;

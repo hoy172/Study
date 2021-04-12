@@ -205,11 +205,10 @@ public class EventControllerTests {
     @Test
     @TestDescription("30개 이벤트를 10개씩 두번째 페이지 조회하기")
     public void queryEvents() throws Exception{
-        //given
+        //Given
         IntStream.range(0, 30).forEach(this::generateEvent);
 
         //When
-
         this.mockMvc.perform(get("/api/events")
                     .param("page", "1")
                     .param("size","10")

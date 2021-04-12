@@ -11,9 +11,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 public class IndexController {
 
     @GetMapping("/api")
-    public RepresentationModel index(){
-        var index = new RepresentationModel<>();
-        index.add(linkTo(EventController.class).withRel("events"));
-        return index;
+    public RepresentationModel<?> index(){
+        return RepresentationModel.of(null)
+                .add(linkTo(EventController.class).withRel("events"));
     }
 }
